@@ -20,54 +20,63 @@ public class Main {
 
 
         //Evento
-        Evento e1 = new Evento("Concerto", LocalDate.of(2020,5,7),
-                "Bellissimo",TipoEvento.PUBBLICO,45678);
-
-        Evento e2 = new Evento("Concerto", LocalDate.of(2010,5,7),
-                "Vuoto",TipoEvento.PUBBLICO,678);
+        PartitaDiCalcio partita = new PartitaDiCalcio(
+                "Calcio",LocalDate.of(2020,4,4),
+                "Finale", TipoEvento.PUBBLICO,123456,"Napoli","Inter",
+                1,4);
+        Concerto concerto = new Concerto(
+                "COncerto",LocalDate.of(2019,4,7),
+                "ConcertoCapodanno",TipoEvento.PUBBLICO,68794,false,Genere.POP
+        );
+        GaraDiAtletica gara = new GaraDiAtletica(
+                "Maratona",LocalDate.of(2013,8,4),
+                "MaratonaNewYork",TipoEvento.PUBBLICO,654564576
+        );
         //salva
-        eventodao.save(e1);
-        eventodao.save(e2);
+        eventodao.save(partita);
+        eventodao.save(concerto);
+        eventodao.save(gara);
 
         //Location da assegnare
-        Location l1 = new Location("Stadio","Napoli");
-        Location l2 = new Location("Stadio","Napoli");
+        Location l1 = new Location("Stadio","Caserta");
+        Location l2 = new Location("Stadio","Milano");
         //Salva
         locationDao.save(l1);
         locationDao.save(l2);
         //setta
-        e1.setLocation(l1);
-        e2.setLocation(l2);
+        partita.setLocation(l1);
+        concerto.setLocation(l2);
+        gara.setLocation(l1);
         //Salva
-        locationDao.save(l1);
-        locationDao.save(l2);
+        eventodao.save(partita);
+        eventodao.save(concerto);
+        eventodao.save(gara);
+        //Persone
+        Persona per1=new Persona(Sesso.F,LocalDate.of(1997,8,6),"email.com",
+                "Gigi","topo");
+        Persona per2=new Persona(Sesso.F,LocalDate.of(1995,8,5),"email.com",
+                "nome","sasa");
+        //SAlva
+        personaDao.save(per1);
+        personaDao.save(per2);
+        //Part
+        Partecipazione pa1 = new Partecipazione(Stato.CONFERMATA);
+        Partecipazione pa2 = new Partecipazione(Stato.NON_CONFERMATA);
+        Partecipazione pa3 = new Partecipazione(Stato.CONFERMATA);
 
+        partecipazioneDao.save(pa1);
+        partecipazioneDao.save(pa2);
+        partecipazioneDao.save(pa3);
 
-        //persona
-      Persona p1 = new Persona(Sesso.M,LocalDate.of(1920,3,4),"mich","ffff","Goku");
-        Persona p2 = new Persona(Sesso.F,LocalDate.of(2010,3,4),"Maria","ffff","Goku");
-        //Salva
-        personaDao.save(p1);
-        personaDao.save(p2);
+        pa1.setEventi((Evento) List.of(partita,concerto,gara));
+        pa2.setEventi((Evento) List.of(partita,concerto,gara));
+        pa3.setEventi((Evento) List.of(partita,concerto,gara));
 
+      per1.setPartecipazioni(List.of(pa1,pa2,pa3));
 
-
-        //Partecipazione
-      Partecipazione partecipazione1 = new Partecipazione(Stato.CONFERMATA);
-        Partecipazione partecipazione2 = new Partecipazione(Stato.CONFERMATA);
-        //Salvo
-        partecipazioneDao.save(partecipazione1);
-        partecipazioneDao.save(partecipazione2);
-
-        //Set persone ed eventi dal lato proprietario
-        partecipazione1.setPersone(p1);
-        partecipazione2.setPersone(p2);
-        partecipazione1.setEventi(e1);
-        partecipazione2.setEventi(e2);
-        //Risalvare partecipazioni
-        partecipazioneDao.save(partecipazione1);
-        partecipazioneDao.save(partecipazione2);
-
+        partecipazioneDao.save(pa1);
+        partecipazioneDao.save(pa2);
+        partecipazioneDao.save(pa3);
 
 
 

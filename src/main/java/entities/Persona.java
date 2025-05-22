@@ -29,6 +29,7 @@ public class Persona {
     @OneToMany(mappedBy = "persone")
     private List<Partecipazione> partecipazioni;
 
+
     //Costruttori
 
 
